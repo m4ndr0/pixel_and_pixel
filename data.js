@@ -1,4 +1,5 @@
-import {nanoid} from "/node_modules/nanoid/nanoid.js"
+
+import createRandomId from "/functions/createRandomId.js"
 
 //Array containing all the playable characters informations
 
@@ -6,7 +7,7 @@ const charactersArray = [
     {
         name: "RoB",
         imageSrc: "/assets/pictures/characters/players/robot1.png",
-        id: nanoid(),
+        id: createRandomId(),
         life: 30,
         mana_power: 3,
         shield: 0,
@@ -14,7 +15,7 @@ const charactersArray = [
     {
         name: "WaCo",
         imageSrc: "/assets/pictures/characters/players/robot2.png",
-        id: nanoid(),
+        id: createRandomId(),
         life: 30,
         mana_power: 3,
         shield: 0,
@@ -22,7 +23,7 @@ const charactersArray = [
     {
         name: "ViC",
         imageSrc: "/assets/pictures/characters/players/robot3.png",
-        id: nanoid(),
+        id: createRandomId(),
         life: 30,
         mana_power: 3,
         shield: 0,
@@ -30,7 +31,7 @@ const charactersArray = [
     {
         name: "MoE",
         imageSrc: "/assets/pictures/characters/players/robot4.png",
-        id: nanoid(),
+        id: createRandomId(),
         life: 30,
         mana_power: 3,
         shield: 0,
@@ -51,7 +52,7 @@ const cardDeckArray = [
         power: 3,
         mana_cost: 1,
         description: "Attack enemy with meele weapon, 3 points damage.",
-        id: nanoid(),
+        id: createRandomId(),
         isUsed: false,
     },
     {
@@ -62,7 +63,7 @@ const cardDeckArray = [
         power: 3,
         mana_cost: 1,
         description: "Attack enemy with meele weapon, 3 points damage.",
-        id: nanoid(),
+        id: createRandomId(),
         isUsed: false,
     },
     {
@@ -73,7 +74,7 @@ const cardDeckArray = [
         power: 3,
         mana_cost: 1,
         description: "Attack enemy with meele weapon, 3 points damage.",
-        id: nanoid(),
+        id: createRandomId(),
         isUsed: false,
     },
     {
@@ -84,7 +85,7 @@ const cardDeckArray = [
         power: 3,
         mana_cost: 1,
         description: "Attack enemy with meele weapon, 3 points damage.",
-        id: nanoid(),
+        id: createRandomId(),
         isUsed: false,
     },
     {
@@ -95,7 +96,7 @@ const cardDeckArray = [
         power: 3,
         mana_cost: 1,
         description: "Reduce meele damage taken, 3 points shield.",
-        id: nanoid(),
+        id: createRandomId(),
         isUsed: false,
     },
     {
@@ -106,7 +107,7 @@ const cardDeckArray = [
         power: 3,
         mana_cost: 1,
         description: "Reduce meele damage taken, 3 points shield.",
-        id: nanoid(),
+        id: createRandomId(),
         isUsed: false,
     },
     {
@@ -117,7 +118,7 @@ const cardDeckArray = [
         power: 3,
         mana_cost: 1,
         description: "Reduce meele damage taken, 3 points shield.",
-        id: nanoid(),
+        id: createRandomId(),
         isUsed: false,
     },
     {
@@ -128,7 +129,7 @@ const cardDeckArray = [
         power: 3,
         mana_cost: 1,
         description: "Reduce meele damage taken, 3 points shield.",
-        id: nanoid(),
+        id: createRandomId(),
         isUsed: false,
     },
     {
@@ -139,7 +140,7 @@ const cardDeckArray = [
         power: 1,
         mana_cost: 1,
         description: "Reduce enemy power attack by 1.",
-        id: nanoid(),
+        id: createRandomId(),
         isUsed: false,
     },
     {
@@ -150,7 +151,7 @@ const cardDeckArray = [
         power: 1,
         mana_cost: 1,
         description: "Reduce enemy power attack by 1.",
-        id: nanoid(),
+        id: createRandomId(),
         isUsed: false,
     },
     {
@@ -161,7 +162,7 @@ const cardDeckArray = [
         power: 1,
         mana_cost: 1,
         description: "Reduce enemy power attack by 1.",
-        id: nanoid(),
+        id: createRandomId(),
         isUsed: false,
     },
     {
@@ -172,7 +173,7 @@ const cardDeckArray = [
         power: 1,
         mana_cost: 1,
         description: "Reduce enemy power attack by 1.",
-        id: nanoid(),
+        id: createRandomId(),
         isUsed: false,
     },
 

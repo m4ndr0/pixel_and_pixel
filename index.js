@@ -690,3 +690,5 @@ function checkWinner(character, enemy) {
 
 
 //Function to start new
+
+
