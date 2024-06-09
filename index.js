@@ -132,6 +132,7 @@ function selectPlayer(e) {
                 isAlive = true
 
                 selectedCharacter = charactersArray[i]
+                
                 localStorage.setItem("selectedCharacter", JSON.stringify(selectedCharacter))
                 renderSelectedCharacterInBattleground(retriveSelectedCharacterById(selectedCharacterId))
                 currentEnemy = getRandomEnemy()
