@@ -1,0 +1,366 @@
+body {
+    margin: 0;
+    color: aliceblue;
+    background-color: black;
+    font-family: "Jaro", sans-serif;
+
+}
+
+/*=== Intro Page CSS ===*/
+
+.intro-page-container {
+    width: 100%;
+    height: 90vh;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.enter-game-button {
+    margin: 0;
+    padding: 12px 25px;
+    background-color: goldenrod;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border: none;
+    border-bottom: 5px solid grey;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-weight: bold;
+    font-family: "Jaro", sans-serif;
+
+}
+
+.enter-game-button:hover {
+    border-bottom: none;
+    margin-top:5px;
+    text-decoration: underline;
+    color: red;
+}
+
+/* === Select Charater Page === */
+
+.character-select-page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.playable-characters-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+
+}
+
+.character-select-card {
+    width: 200px;
+    border: 2px solid red;
+    padding: 10px;
+}
+
+.character-select-card:hover {
+    border: 2px solid aliceblue;
+    color: red;
+}
+
+.select-character-image {
+    width: 100%;
+    cursor: pointer;
+}
+
+/* === Gameplay Page === */
+
+.gameplay-page-container {
+    margin: auto;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-scene-container {
+    background-image: url("/assets/pictures/backgrounds/forest2.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 90%;
+    height: 100%;
+    max-width: 1200px;
+    text-align: center;
+}
+
+.all-players-bars-container {
+    display: flex;
+    justify-content: space-between;
+    margin: auto 5%;
+    font-size: 1.3rem;
+}
+
+.player-bars-container {
+    display: flex;
+    background-color: black;
+    padding: 2px 5px;
+}
+
+.player-bars {
+    margin-right: 20px;
+}
+
+.mana-bar {
+    margin-right: 0;
+}
+
+.enemy-bar {
+    background-color: black;
+    padding: 2px 5px;
+
+}
+
+.battleground-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 100px;
+}
+
+.battleground-section {
+    margin-top: 3%;
+    width: 30%;
+    max-width: 200px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+}
+
+.player-image, .enemy-image {
+    width: 100%;
+}
+
+.player-moves-container {
+    position: relative;
+    
+    text-align: center;
+    font-size: 1.1rem;
+    margin: auto;
+    padding: 0;
+    line-height: 1.1rem;
+    letter-spacing: 2px;
+}
+
+.card-buttons {
+    background-color: goldenrod;
+    border: none;
+    margin: auto;
+    
+}
+
+.use-card-button {
+    font-family: "Jaro", sans-serif;
+    padding: 10px 20px;
+    position: absolute;
+    bottom: 3px;
+    left: 0;
+    right: 0;
+    margin: 0 3px;
+    cursor: pointer;
+}
+
+.close-card-window-button {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+.commands-and-deck-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.commands-container {
+    margin-top: 50px;
+    margin: 0;
+    margin-left: 20px;
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    width: 25%;
+    margin: auto;
+}
+
+.command-button {
+    width: 150px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: "Jaro", sans-serif;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+    background-color: goldenrod;
+}
+
+.command-button:hover {
+    text-decoration: underline;
+    font-weight: bold;
+    color: red;
+}
+
+.cards-in-hand-container {
+    width: 50%;
+    height: 100px;
+    display: flex;
+    }
+
+.card-in-hand {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-in-hand > img {
+    width: 70%;
+    max-width: 70px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.card-in-hand >img:hover {
+    box-shadow: 0 0 5px aliceblue;
+}
+
+.deck-container {
+    width: 25%;
+    margin: 0;
+}
+
+.deck-image {
+    width: 120px;
+    cursor: pointer;
+}
+
+.deck-window-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 90%;
+    max-width: 1200px;
+    line-height: 1px;
+    background-color: gray;
+    align-items: center;
+    padding: 10px;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+}
+
+.deck-window {
+    display: flex;
+    height: 90%;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.close-deck-window-button {
+    display: block;
+    margin-left: auto;
+    cursor: pointer;
+    background-color: goldenrod;
+    border: none;
+    color: aliceblue;
+    font-weight: bold;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    
+}
+
+.card-in-show-deck-window {
+    padding: 10px;
+    box-shadow: 3px 3px 3px 2px black;
+    width: 20%;
+    max-width: 150px;
+    margin: auto;
+    border-radius: 5px;
+    font-size: 0.7rem;
+    
+}
+
+.card-in-show-deck-window > img {
+    width: 45%;
+}
+
+.card-in-show-deck-window-description {
+    line-height: normal;
+}
+
+/* === Misc Icons classes === */
+
+.player-character-container {
+    position: relative;
+}
+
+.shield-icon-player {
+    position: absolute;
+    right: 0;
+    bottom: 60px;
+    width: 80px;
+}
+
+.player-shield-count {
+    position: absolute;
+    right: 0;
+    bottom: 50px;
+    background-color: black;
+    width: 20px;
+    height: 20px;
+    border: 2px solid aliceblue;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.enemy-character-container {
+    position: relative;
+}
+
+
+.hit-icon-enemy, .hit-icon-player {
+    position: absolute;
+}
+
+
+
+/* === Classes toggled with JavaScript === */
+
+/*=== Leave HIDE at the bottom of the CSS page  ===*/
+
+.hide {
+    display: none;
+}
+
+.card-background {
+    border: 4px solid goldenrod;
+    border-radius: 5px;
+    background-color: black;
+    padding: 0 5px;
+}
