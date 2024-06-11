@@ -90,7 +90,6 @@ body {
 }
 
 .game-scene-container {
-    /*background-image: url("/assets/pictures/backgrounds/forest2.png"); */
     width: 90%;
     height: 100%;
     max-width: 700px;
@@ -107,7 +106,7 @@ body {
     font-size: 1.3rem;
     align-items:end;
     width: 100%;
-    height:210%;
+    height: 10%;
     margin:  auto;
 }
 
@@ -170,12 +169,6 @@ body {
     padding: 0;
     line-height: 1.1rem;
     letter-spacing: 2px;
-}
-
-.card-buttons {
-    background-color: goldenrod;
-    border: none;
-    margin: auto;
 }
 
 
@@ -361,14 +354,12 @@ body {
 
 
 @media (max-width: 610px) {
-    .gameplay-page-container {
-        height: 50%;
-    }
 
     .all-players-bars-container {
         font-size: 1.5rem;
-        height: 150px;
+        height: 250px;
     }
+
 
     .player-bars-container{
         display: inline;
@@ -396,6 +387,8 @@ body {
 
     .commands-and-deck-container {
         height: 100%;
+        margin-bottom: auto;
+        display: flex;
     }
 
 
@@ -416,7 +409,11 @@ body {
 
     .cards-in-hand-container {
         width: 100%;
+        margin: 20px auto;
+        margin-bottom: auto;
     }
+
+
 
 
 }
@@ -425,18 +422,12 @@ body {
         bottom: 40px;
     }
 
-    .gameplay-page-container {
-        height: 40%;
-    }
+    
 
 }
 @media (max-width: 490px) {
     .enemy-image, .player-image {
         bottom: 60px;
-    }
-
-    .gameplay-page-container {
-        height: 30%;
     }
 
     
