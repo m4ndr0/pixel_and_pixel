@@ -942,6 +942,7 @@ function startNewGame() {
     toggleHideClass(characterSelectPage)
 }
 
+localStorage.clear()
 //Function to jump into next stage
 function startNextStage() {
     handArray = []

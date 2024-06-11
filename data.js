@@ -189,7 +189,7 @@ const stagesArray = [
     },
     {
         stage_id: 2,
-        stage_background_src: "/assets/pictures/backgrounds/forest2.png"
+        stage_background_src: "/assets/pictures/backgrounds/desert1.jpg"
     },
     {
         stage_id: 3,
@@ -197,6 +197,10 @@ const stagesArray = [
     },
     {
         stage_id: 4,
+        stage_background_src: "/assets/pictures/backgrounds/japanese_temple1.jpg"
+    },
+    {
+        stage_id: 5,
         stage_background_src: "/assets/pictures/backgrounds/forest4.png"
     },
 ]
@@ -207,7 +211,7 @@ const newEnemiesArray = [
     {
         name: "DragOn",
         type: "Dragon",
-        life: 25,
+        life: 20,
         moves: [
             {
                 name: "claw",
@@ -229,7 +233,7 @@ const newEnemiesArray = [
     {
         name: "Robort",
         type: "Robot",
-        life: 30,
+        life: 25,
         moves: [
             {
                 name: "pistol",
@@ -247,6 +251,72 @@ const newEnemiesArray = [
         imageSrc: "/assets/pictures/characters/enemies/robotEnemy1.png",
         course_attack: 0,
         id: 2,
+    },
+    {
+        name: "Gorbo",
+        type: "Goblin",
+        life: 30,
+        moves: [
+            {
+                name: "slime",
+                power: 4
+            },
+            {
+                name: "knife",
+                power: 5
+            },
+            {
+                name: "bad_smell",
+                power: 6
+            },
+        ],
+        imageSrc: "/assets/pictures/characters/enemies/redGoblin1.png",
+        course_attack: 0,
+        id: 3,
+    },
+    {
+        name: "Jutzu",
+        type: "Ninja",
+        life: 35,
+        moves: [
+            {
+                name: "ninjitzu",
+                power: 6
+            },
+            {
+                name: "shuriken",
+                power: 7
+            },
+            {
+                name: "silent kill",
+                power: 8
+            },
+        ],
+        imageSrc: "/assets/pictures/characters/enemies/blackKnight1.png",
+        course_attack: 0,
+        id: 4,
+    },
+    {
+        name: "Gold Knight",
+        type: "Knight",
+        life: 40,
+        moves: [
+            {
+                name: "sword",
+                power: 7
+            },
+            {
+                name: "mace",
+                power: 8
+            },
+            {
+                name: "final touch",
+                power: 10
+            },
+        ],
+        imageSrc: "/assets/pictures/characters/enemies/goldKnight1.png",
+        course_attack: 0,
+        id: 5,
     },
 ]
 
