@@ -903,27 +903,50 @@ function checkWinner(character, enemy) {
         }, 6000)
 
         localStorage.clear()
-
+        handArray = []
+        
     } else if (enemyLife <= 0) {
         console.log(`${character.name} wins, you beated ${enemy.name}`)
+        const stage = getCurrentStage()
+
         drawCardButton.disabled = true
         endTurnButton.disabled = true
         enemyLifeBar.innerText = 0
         clearDivHTML(cardsInHandContainer)
 
-        const button = document.createElement("button")
-        button.className = "command-button"
-        button.textContent = "Next Stage"
-        button.onclick = startNextStage
+        if (stage.stage_id === 5) {
+            // ///////////////////// CHANGE THE CODE HERE TO ADD THE END VIDEO   ////////////////////////////////////////////
+            const button = document.createElement("button")
+            button.className = "command-button"
+            button.textContent = "Restart"
+            button.onclick = startNewGame
+            
+            handArray = []
+            localStorage.clear()
 
-        setTimeout(()=>{
-            playerMovesContainer.innerText = `You beated ${enemy.name}!!`
-            winningSound.play()
-        }, 2000)
-        setTimeout(()=>{
-            clearDivHTML(playerMovesContainer)
-            playerMovesContainer.appendChild(button)
-        }, 6000)
+            setTimeout(()=>{
+                playerMovesContainer.innerText = `You beated ${enemy.name}!!`
+                winningSound.play()
+            }, 2000)
+            setTimeout(()=>{
+                clearDivHTML(playerMovesContainer)
+                playerMovesContainer.appendChild(button)
+            }, 6000)
+        } else {
+            const button = document.createElement("button")
+            button.className = "command-button"
+            button.textContent = "Next Stage"
+            button.onclick = startNextStage
+    
+            setTimeout(()=>{
+                playerMovesContainer.innerText = `You beated ${enemy.name}!!`
+                winningSound.play()
+            }, 2000)
+            setTimeout(()=>{
+                clearDivHTML(playerMovesContainer)
+                playerMovesContainer.appendChild(button)
+            }, 6000)
+        }
         
     }
 
@@ -934,7 +957,6 @@ function checkWinner(character, enemy) {
 
 function startNewGame() {
     console.log("Starting new game....")
-    localStorage.clear()
     clearDivHTML(playerMovesContainer)
     drawCardButton.disabled = false
     endTurnButton.disabled = false
