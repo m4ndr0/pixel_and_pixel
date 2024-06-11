@@ -207,19 +207,19 @@ const newEnemiesArray = [
     {
         name: "DragOn",
         type: "Dragon",
-        life: 1,
+        life: 25,
         moves: [
             {
                 name: "claw",
-                power: 3
+                power: 1
             },
             {
                 name: "bite",
-                power: 6
+                power: 3
             },
             {
                 name: "huge_sword",
-                power: 9
+                power: 6
             },
         ],
         imageSrc: "/assets/pictures/characters/enemies/dragoPixel1.png",
@@ -227,21 +227,21 @@ const newEnemiesArray = [
         id: 1,
     },
     {
-        name: "Robert",
+        name: "Robort",
         type: "Robot",
-        life: 50,
+        life: 30,
         moves: [
             {
-                name: "claw",
+                name: "pistol",
                 power: 3
             },
             {
-                name: "bite",
-                power: 6
+                name: "AI",
+                power: 4
             },
             {
-                name: "huge_sword",
-                power: 9
+                name: "laser",
+                power: 6
             },
         ],
         imageSrc: "/assets/pictures/characters/enemies/robotEnemy1.png",
