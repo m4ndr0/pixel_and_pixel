@@ -361,9 +361,13 @@ body {
 
 
 @media (max-width: 610px) {
+    .gameplay-page-container {
+        height: 50%;
+    }
 
-    .enemy-image, .player-image {
-        bottom: 20px;
+    .all-players-bars-container {
+        font-size: 1.5rem;
+        height: 150px;
     }
 
     .player-bars-container{
@@ -373,15 +377,22 @@ body {
     .player-bars {
         margin: 0;
     }
-
-    .all-players-bars-container {
-        font-size: 1.5rem;
-        height: 150px;
+    .enemy-image, .player-image {
+        bottom: 20px;
     }
 
-    .gameplay-page-container {
-        height: 50%;
+    .hit-icon-player, .hit-icon-enemy {
+        width: 80%;
+        bottom: 70px;
+        right: 0;
+        left: 0;
     }
+
+    .shield-icon-player {
+        width: 50%;
+        bottom: 50px;
+    }
+
 
     .commands-and-deck-container {
         height: 100%;
@@ -391,7 +402,7 @@ body {
     .commands-container {
         display: flex;
         position: absolute;
-        bottom: 5px;
+        bottom: 20px;
         left: 20px;
         width: 65%;
     }
@@ -426,6 +437,14 @@ body {
 
     .gameplay-page-container {
         height: 30%;
+    }
+
+    
+}
+
+@media (max-width: 457px) {
+    .select-character-image {
+        width: 50%;
     }
 }
 
