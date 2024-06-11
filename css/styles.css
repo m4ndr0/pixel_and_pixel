@@ -3,7 +3,11 @@ body {
     color: aliceblue;
     background-color: black;
     font-family: "Jaro", sans-serif;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
 }
 
 /*=== Intro Page CSS ===*/
@@ -78,6 +82,7 @@ body {
 
 .gameplay-page-container {
     margin: auto;
+    width: 100%;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -85,21 +90,27 @@ body {
 }
 
 .game-scene-container {
-    background-image: url("/assets/pictures/backgrounds/forest2.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+    /*background-image: url("/assets/pictures/backgrounds/forest2.png"); */
     width: 90%;
     height: 100%;
-    max-width: 1200px;
+    max-width: 700px;
     text-align: center;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
 }
 
 .all-players-bars-container {
     display: flex;
     justify-content: space-between;
-    margin: auto 5%;
     font-size: 1.3rem;
+    border: 1px solid green;
+    align-items:end;
+    width: 100%;
+    height:210%;
+    margin:  auto;
 }
 
 .player-bars-container {
@@ -123,10 +134,17 @@ body {
 }
 
 .battleground-container {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    margin-top: 100px;
+    width: 100%;
+    margin: auto;
+    border: 1px solid red;
+    height: 60%;
+    min-height: 400px;
 }
 
 .battleground-section {
@@ -136,15 +154,20 @@ body {
     height: 300px;
     display: flex;
     align-items: center;
+    position: relative;
+
 }
 
 .player-image, .enemy-image {
     width: 100%;
+    margin: auto;
+    position: absolute;
+    bottom: 0;
+    border: 1px solid pink;
 }
 
 .player-moves-container {
     position: relative;
-    
     text-align: center;
     font-size: 1.1rem;
     margin: auto;
@@ -157,48 +180,28 @@ body {
     background-color: goldenrod;
     border: none;
     margin: auto;
-    
-}
-
-.use-card-button {
-    font-family: "Jaro", sans-serif;
-    padding: 10px 20px;
-    position: absolute;
-    bottom: 3px;
-    left: 0;
-    right: 0;
-    margin: 0 3px;
-    cursor: pointer;
-}
-
-.close-card-window-button {
-    position: absolute;
-    top: 3px;
-    right: 3px;
-    cursor: pointer;
-    font-weight: bold;
 }
 
 
 .commands-and-deck-container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    padding: 10px;
+    height: 20%;
+    border: 1px solid purple;
 }
 
 .commands-container {
-    margin-top: 50px;
-    margin: 0;
-    margin-left: 20px;
+    margin: auto;
     display: flex;
     gap: 15px;
     flex-direction: column;
     width: 25%;
-    margin: auto;
 }
 
 .command-button {
-    width: 150px;
+    width: 90%;
+    min-width: 119px;
     padding: 10px 20px;
     cursor: pointer;
     font-family: "Jaro", sans-serif;
@@ -206,6 +209,7 @@ body {
     border: none;
     border-radius: 5px;
     background-color: goldenrod;
+    margin: auto;
 }
 
 .command-button:hover {
@@ -218,6 +222,7 @@ body {
     width: 50%;
     height: 100px;
     display: flex;
+    border: 1px solid grey;
     }
 
 .card-in-hand {
@@ -239,8 +244,9 @@ body {
 }
 
 .deck-container {
-    width: 25%;
-    margin: 0;
+    width: 20%;
+    margin: auto;
+    border: 1px solid green;
 }
 
 .deck-image {
@@ -321,7 +327,7 @@ body {
 .shield-icon-player {
     position: absolute;
     right: 0;
-    bottom: 60px;
+    bottom: 0;
     width: 80px;
 }
 
@@ -346,6 +352,8 @@ body {
 
 .hit-icon-enemy, .hit-icon-player {
     position: absolute;
+    bottom: 0;
+    margin: auto;
 }
 
 
@@ -358,9 +366,74 @@ body {
     display: none;
 }
 
-.card-background {
-    border: 4px solid goldenrod;
-    border-radius: 5px;
-    background-color: black;
-    padding: 0 5px;
+
+@media (max-width: 610px) {
+
+    .enemy-image, .player-image {
+        bottom: 20px;
+    }
+
+    .player-bars-container{
+        display: inline;
+    }
+
+    .player-bars {
+        margin: 0;
+    }
+
+    .all-players-bars-container {
+        font-size: 1.5rem;
+        height: 150px;
+    }
+
+    .gameplay-page-container {
+        height: 50%;
+    }
+
+    .commands-and-deck-container {
+        height: 100%;
+    }
+
+
+    .commands-container {
+        display: flex;
+        position: absolute;
+        bottom: 5px;
+        left: 20px;
+        width: 65%;
+    }
+
+    
+    .deck-container {
+        position: absolute;
+        bottom: -5px;
+        right: 40px;
+    }
+
+    .cards-in-hand-container {
+        width: 100%;
+    }
+
+
 }
+@media (max-width: 550px) {
+    .enemy-image, .player-image {
+        bottom: 40px;
+    }
+
+    .gameplay-page-container {
+        height: 40%;
+    }
+
+}
+@media (max-width: 490px) {
+    .enemy-image, .player-image {
+        bottom: 60px;
+    }
+
+    .gameplay-page-container {
+        height: 30%;
+    }
+}
+
+

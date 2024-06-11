@@ -28,8 +28,7 @@
         </div>
 
         <div class="gameplay-page-container hide" id="gameplay-page-container">
-            <div class="game-scene-container">
-                <h1>Pixel and Pixel</h1>
+            <div class="game-scene-container" id="game-scene-container">
 
                 <div class="all-players-bars-container">
                     <div class="player-bars-container">
@@ -39,7 +38,7 @@
                     <div class="enemy-bar life-bar">Life: <span id="enemy-life-bar"></span></div>
                 </div>
 
-                <div class="battleground-container">
+                <div class="battleground-container" id="battleground-container">
                     <div class="player-character-container battleground-section">
                         <img class="player-image" id="player-image" src="/assets/pictures/characters/players/robot1.png" />
                         <img class="hit-icon-player hide" id="hit-icon-player" src="/assets/pictures/misc/hit_icon.png" />
@@ -49,9 +48,7 @@
                     </div>
 
                     <div class="player-moves-container battleground-section" id="player-moves-container">
-                        <!-- <div class="card-infos-container" id="card-infos-container"></div>
-                        <button class="card-buttons close-card-window-button hide" id="close-card-window-button">X</button>
-                        <button class="card-buttons use-card-button hide" id="use-card-button">Use</button> -->
+
                     </div>
 
                     <div class="enemy-character-container battleground-section">
@@ -62,8 +59,8 @@
 
                 <div class="commands-and-deck-container" id="commands-and-deck-container">
                     <div class="commands-container">
-                        <button class="command-button" id="draw-card-button">Draw Card</button>
-                        <button class="command-button" id="end-turn-button">End Turn</button>
+                        <button class="command-button draw-button" id="draw-card-button">Draw Card</button>
+                        <button class="command-button end-turn-button" id="end-turn-button">End Turn</button>
                     </div>
 
                     <div class="cards-in-hand-container" id="cards-in-hand-container"></div>

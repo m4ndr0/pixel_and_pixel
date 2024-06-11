@@ -1,6 +1,11 @@
 /* === Imports === */
 
-import {charactersArray, cardDeckArray, enemiesArray} from "/data.js"
+import {charactersArray, cardDeckArray, newEnemiesArray, stagesArray} from "/data.js"
+import getCurrentPlayer from "./functions/getCurrentPlayer.js"
+import getCurrentStage from "./functions/getCurrentStage.js"
+import getCurrentEnemy from "./functions/getCurrentEnemy.js"
+import getRandomNumberArrayLength from "./functions/getRandomNumberArrayLength.js"
+import renderCurrentStageBackground from "./functions/renderCurrentStageBackground.js"
 
 /* === Global Variables ===  */
 
@@ -117,7 +122,7 @@ for (let character of charactersArray) {
 
 /* === Functions to select player character and render the selected character on the battleground === */
 
-let currentEnemy = ""
+
 
 function selectPlayer(e) {
     if (e.target.id && e.target.id != "playable-characters-container") {
@@ -132,18 +137,66 @@ function selectPlayer(e) {
                 isAlive = true
 
                 selectedCharacter = charactersArray[i]
+/////////////////////////////////////////////////////////
+                let stage = stagesArray[0]
+                let currentEnemy = newEnemiesArray[0]
                 
-                localStorage.setItem("selectedCharacter", JSON.stringify(selectedCharacter))
+                let currentGameStatus = [selectedCharacter, stage, currentEnemy]
+
+
+                localStorage.setItem("currentGameStatus", JSON.stringify(currentGameStatus))
+
+              ///////  localStorage.setItem("selectedCharacter", JSON.stringify(selectedCharacter)) ///////
+                renderCurrentStageBackground(stage)
                 renderSelectedCharacterInBattleground(retriveSelectedCharacterById(selectedCharacterId))
-                currentEnemy = getRandomEnemy()
                 renderEnemyInBattleground(currentEnemy)
+                
                 toggleHideClass(characterSelectPage)
                 toggleHideClass(gameplayPageContainer)
+
+
             }
 
         }
     }
 }
+
+
+//Function to retrive game status after refreshing page
+
+function regainStage(){
+        let currentGameStatus = JSON.parse(localStorage.getItem("currentGameStatus"))
+        if (currentGameStatus) {
+            isAlive = true
+            isGameStarted = true
+
+            let character = currentGameStatus[0]
+            let stage = currentGameStatus[1]
+            let enemy = currentGameStatus[2]
+
+
+            renderCurrentStageBackground(stage)
+
+            toggleHideClass(introPageContainer)
+            toggleHideClass(gameplayPageContainer)
+            
+
+            renderPlayerFromLocalStorage()
+            renderEnemyInBattleground(enemy)
+            renderCurrentGameStatus()
+        }
+    
+}
+regainStage()
+
+//Function to retrive enemy by the stage id number
+
+function retriveEnemyByStageId(stageId, enemiesArray) {
+    for (let i = 0; i < enemiesArray.length; i++) {
+        return enemiesArray[stageId - 1]
+    }
+}
+
 
 
 function retriveSelectedCharacterById(id) {
@@ -170,21 +223,12 @@ function showHideDeck() {
     toggleHideClass(deckWindowContainer)
 }
 
-function getRandomNumber(array) {
-    let randomNumber = Math.ceil(Math.random()*array.length) -1
-    return randomNumber
-}
 
 // Fuction that returns a random card object
 
 function getRandomCardFromDeck() {
-    let randomIndex = getRandomNumber(cardDeckArray)
-    let randomCard = ""
-    for (let i = 0; i < cardDeckArray.length; i++) {
-        if (randomIndex === i) {
-            randomCard = cardDeckArray[i]
-        }
-    }
+
+    let randomCard = getRandomNumberArrayLength(cardDeckArray)
     return randomCard
 }
 
@@ -200,7 +244,7 @@ function returnFilterdArray(array) {
 
 function getHand() {
     if (isAlive) {
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 8; i++) {
             getCard()
             }
     }
@@ -237,21 +281,8 @@ function renderCardsInHand() {
 
 function clearDivHTML(htmlElement) {
     htmlElement.innerHTML = ""
-    console.log(`${htmlElement} cleared`)
 }
 
-// Function that returns a random enemy object
-
-function getRandomEnemy() {
-    let randomIndex = getRandomNumber(enemiesArray)
-    let randomEnemy = ""
-    for (let i = 0; i < enemiesArray.length; i++) {
-        if (randomIndex === i) {
-            randomEnemy = enemiesArray[i]
-        }
-    }
-    return randomEnemy
-}
 
 function renderEnemyInBattleground(obj) {
     enemyImage.src = obj.imageSrc
@@ -274,8 +305,9 @@ function getCardById(id, array) {
 //Function to get Mana left
 
 function getRemainingMana() {
-    let character = JSON.parse(localStorage.getItem("selectedCharacter"))
-    let remainingMana = Number(character.mana_power)
+    let currentGameStatus = JSON.parse(localStorage.getItem("currentGameStatus"))
+    let currentCharacter = currentGameStatus[0]
+    let remainingMana = Number(currentCharacter.mana_power)
     return remainingMana
 }
 
@@ -295,29 +327,69 @@ function attackCard() {
 
         const attackPower = 3
 
-        let character = JSON.parse(localStorage.getItem("selectedCharacter"))
+        let currentGameStatus = JSON.parse(localStorage.getItem("currentGameStatus"))
+        let character = currentGameStatus[0]
+        let stage = currentGameStatus[1]
+        let enemy = currentGameStatus[2]
 
-        let updatedCharacterObj = {
-            name: character.name,
-            imageSrc: character.imageSrc,
-            id: character.id,
-            life: character.life,
-            mana_power: remainingMana - 1,
-            shield: character.shield,
-        }
+        let updatedGameStatus = [
+            {
+                name: character.name,
+                imageSrc: character.imageSrc,
+                id: character.id,
+                life: character.life,
+                mana_power: remainingMana - 1,
+                shield: character.shield,
+            },
+            {
+                stage_id: stage.stage_id,
+                stage_background_src: stage.stage_background_src
+            },
+            {
+                name: enemy.name,
+                type: enemy.type,
+                life: enemy.life - attackPower,
+                moves: enemy.moves,
+                imageSrc: enemy.imageSrc,
+                course_attack: enemy.course_attack,
+                id: enemy.id,
+            },
+        ]
+        // let updatedCharacterObj = {
+        //     name: character.name,
+        //     imageSrc: character.imageSrc,
+        //     id: character.id,
+        //     life: character.life,
+        //     mana_power: remainingMana - 1,
+        //     shield: character.shield,
+        // }
 
-        localStorage.setItem("selectedCharacter", JSON.stringify(updatedCharacterObj))
+        localStorage.setItem("currentGameStatus", JSON.stringify(updatedGameStatus))
 
 
-        let stringEnemyLife = enemyLifeBar.innerText
-        let numberEnemyLife = Number(stringEnemyLife)
-
-        let updatedEnemyLife = numberEnemyLife - attackPower
-
-        enemyLifeBar.innerText = updatedEnemyLife
-        playerManaBar.innerText = remainingMana - 1
+        renderCurrentGameStatus()
     } else if (remainingMana === 0) {
         console.log("No Mana left")
+    }
+}
+
+//Function to render current Game status
+
+function renderCurrentGameStatus() {
+    const currentGameStatus = JSON.parse(localStorage.getItem("currentGameStatus"))
+    const player = currentGameStatus[0]
+    const stage = currentGameStatus[1]
+    const enemy = currentGameStatus[2]
+    playerLifeBar.innerText = player.life
+    playerManaBar.innerText = player.mana_power
+    enemyLifeBar.innerText = enemy.life
+    if (player.shield > 0) {
+        shieldIconPlayer.classList.remove("hide")
+        playerShieldCount.innerText = player.shield
+        playerShieldCount.classList.remove("hide")
+    } else {
+        shieldIconPlayer.classList.add("hide")
+        playerShieldCount.classList.add("hide")
     }
 }
 
@@ -326,26 +398,40 @@ function shieldCard() {
     const remainingMana = getRemainingMana()
     if (remainingMana > 0) {
         equipArmorSound.play()
+        let currentGameStatus = JSON.parse(localStorage.getItem("currentGameStatus"))
+        let character = currentGameStatus[0]
+        let stage = currentGameStatus[1]
+        let enemy = currentGameStatus[2]
+
+        let updatedGameStatus = [
+            {
+                name: character.name,
+                imageSrc: character.imageSrc,
+                id: character.id,
+                life: character.life,
+                mana_power: remainingMana - 1,
+                shield: character.shield + 3,
+            },
+            {
+                stage_id: stage.stage_id,
+                stage_background_src: stage.stage_background_src
+            },
+            {
+                name: enemy.name,
+                type: enemy.type,
+                life: enemy.life,
+                moves: enemy.moves,
+                imageSrc: enemy.imageSrc,
+                course_attack: enemy.course_attack,
+                id: enemy.id,
+            },
+        ]
+
+        localStorage.setItem("currentGameStatus", JSON.stringify(updatedGameStatus))
 
 
-        let character = JSON.parse(localStorage.getItem("selectedCharacter"))
+        renderCurrentGameStatus()
 
-        let updatedCharacterObj = {
-            name: character.name,
-            imageSrc: character.imageSrc,
-            id: character.id,
-            life: character.life,
-            mana_power: remainingMana - 1,
-            shield: character.shield + 3,
-        }
-
-        playerShieldCount.innerText = Number(updatedCharacterObj.shield)
-        playerManaBar.innerText = Number(updatedCharacterObj.mana_power)
-
-        shieldIconPlayer.classList.remove("hide")
-        playerShieldCount.classList.remove("hide")
-
-        localStorage.setItem("selectedCharacter", JSON.stringify(updatedCharacterObj))
 
     }
 }
@@ -354,24 +440,42 @@ function shieldCard() {
 function skeletonCard() {
     const remainingMana = getRemainingMana()
     if (remainingMana > 0) {
-
-        let character = JSON.parse(localStorage.getItem("selectedCharacter"))
-
-        let updatedCharacterObj = {
-            name: character.name,
-            imageSrc: character.imageSrc,
-            id: character.id,
-            life: character.life,
-            mana_power: remainingMana - 1,
-            shield: character.shield,
-        }
-
-
-        currentEnemy.course_attack += 1
         courseSound.play()
-        playerManaBar.innerText = Number(updatedCharacterObj.mana_power)
 
-        localStorage.setItem("selectedCharacter", JSON.stringify(updatedCharacterObj))
+        let currentGameStatus = JSON.parse(localStorage.getItem("currentGameStatus"))
+        let character = currentGameStatus[0]
+        let stage = currentGameStatus[1]
+        let enemy = currentGameStatus[2]
+
+        let updatedGameStatus = [
+            {
+                name: character.name,
+                imageSrc: character.imageSrc,
+                id: character.id,
+                life: character.life,
+                mana_power: remainingMana - 1,
+                shield: character.shield,
+            },
+            {
+                stage_id: stage.stage_id,
+                stage_background_src: stage.stage_background_src
+            },
+            {
+                name: enemy.name,
+                type: enemy.type,
+                life: enemy.life,
+                moves: enemy.moves,
+                imageSrc: enemy.imageSrc,
+                course_attack: enemy.course_attack + 1,
+                id: enemy.id,
+            },
+        ]
+
+        localStorage.setItem("currentGameStatus", JSON.stringify(updatedGameStatus))
+
+
+        renderCurrentGameStatus()
+        
     }
 }
 
@@ -379,10 +483,10 @@ function skeletonCard() {
 // var audio = new Audio('audio_file.mp3');
 // audio.play();
 
+
 // Function to use selected card
 cardsInHandContainer.addEventListener("click", function(e) {
     if (isAlive) {
-        let character = getCurrentCharacter()
         if (getRemainingMana() != 0) {
             if (e.target.id != "cards-in-hand-container" && e.target.classList != "card-in-hand") {
                 let cardId = e.target.id
@@ -394,12 +498,12 @@ cardsInHandContainer.addEventListener("click", function(e) {
                     attackCard()
                 } else if (card.name === "skeleton") {
                     skeletonCard()
-                    console.log(`Coursed! Enemy's attack reduced by ${currentEnemy.course_attack}`)
+                    console.log(`Coursed! Enemy's attack reduced by ${getCurrentEnemy().course_attack}`)
                 }
                 toggleHideClass(e.target)
                 
-                checkWinner(getCurrentCharacter(), currentEnemy)
-                renderCharactersActionInBG(character, card)
+                checkWinner(getCurrentPlayer(), getCurrentEnemy())
+                renderCharactersActionInBG(getCurrentPlayer(), card)
     
             } else {
                 console.log("Not Enough Mana")
@@ -420,11 +524,11 @@ function endPlayerTurn() {
         clearDivHTML(cardsInHandContainer)
         handArray = []
         resetIsUsedBoolean(cardDeckArray)
-    
+        drawCardButton.disabled = true
+        endTurnButton.disabled = true
         setTimeout(() => {
             startEnemyTurn() 
         }, 1500)
-        drawCardButton.disabled = true
     }
 }
 
@@ -436,8 +540,8 @@ function resetIsUsedBoolean(array) {
 
 function startEnemyTurn() {
     if (isAlive) {
-    useShield(enemyNormalAttack(currentEnemy))
-    checkWinner(getCurrentCharacter(), currentEnemy)
+    useShield(enemyRandomAttack(getCurrentEnemy()))
+    checkWinner(getCurrentPlayer(), getCurrentEnemy())
 
         setTimeout(() => {
             startPlayerTurn()
@@ -445,59 +549,75 @@ function startEnemyTurn() {
     }
 }
 
-//Function to get current selected player character
-
-function getCurrentCharacter() {
-    return JSON.parse(localStorage.getItem("selectedCharacter"))
-}
-
 //Function enemy attack Functions
 
+function enemyRandomAttack(enemyObj) {
 
-function enemyNormalAttack(enemyObj) {
+    const randomAttackObj = getRandomNumberArrayLength(enemyObj.moves)
 
-    let enemyAttack = enemyObj.attack_power
+    let attackPower = randomAttackObj.power
 
     if (enemyObj.course_attack != 0) {
 
-        enemyAttack = enemyAttack - enemyObj.course_attack
+        attackPower = attackPower - enemyObj.course_attack
     }
-    renderEnemyActionInBG(enemyObj)
-    return enemyAttack
+    renderEnemyActionInBG(enemyObj, randomAttackObj)
+    return attackPower
 
 }
 
+function randomEnemyAttack(enemyObj) {
+    
+}
 //Function to subtract shield from any enemy attack
 
 
 function useShield(enemyAttack) {
 
-    const character = getCurrentCharacter()
+    const character = getCurrentPlayer()
+    let stage = getCurrentStage()
+    let enemy = getCurrentEnemy()
 
     let currentShield = character.shield
 
     let realEnemyAttackPower = 0
 
-    let updatedCharacterObj = ""
+    let updatedGameStatus = ""
 
     if (currentShield === 0) {
 
         realEnemyAttackPower = enemyAttack
         console.log(` Shield = ${currentShield}, enemy attack = ${realEnemyAttackPower}`)
 
-        updatedCharacterObj = {
-                 name: character.name,
-                 imageSrc: character.imageSrc,
-                 id: character.id,
-                 life: character.life - realEnemyAttackPower,
-                 mana_power: character.mana_power,
-                 shield: character.shield,
-             }
-             swordSound.play()
-             toggleHideClass(hitIconPlayer)
-             setTimeout(() => {
-                 toggleHideClass(hitIconPlayer)
-             }, 300);
+        updatedGameStatus = [
+            {
+                name: character.name,
+                imageSrc: character.imageSrc,
+                id: character.id,
+                life: character.life - realEnemyAttackPower,
+                mana_power: character.mana_power,
+                shield: currentShield,
+            },
+            {
+                stage_id: stage.stage_id,
+                stage_background_src: stage.stage_background_src
+            },
+            {
+                name: enemy.name,
+                type: enemy.type,
+                life: enemy.life,
+                moves: enemy.moves,
+                imageSrc: enemy.imageSrc,
+                course_attack: enemy.course_attack,
+                id: enemy.id,
+            },
+        ]
+        
+        swordSound.play()
+        toggleHideClass(hitIconPlayer)
+        setTimeout(() => {
+            toggleHideClass(hitIconPlayer)
+        }, 300);
 
 
     } else if (currentShield > enemyAttack) {
@@ -505,14 +625,30 @@ function useShield(enemyAttack) {
         currentShield = currentShield - enemyAttack
         console.log(` Shield = ${currentShield}, enemy attack = ${realEnemyAttackPower}`)
 
-        updatedCharacterObj = {
-            name: character.name,
-            imageSrc: character.imageSrc,
-            id: character.id,
-            life: character.life,
-            mana_power: character.mana_power,
-            shield: currentShield,
-        }
+        updatedGameStatus = [
+            {
+                name: character.name,
+                imageSrc: character.imageSrc,
+                id: character.id,
+                life: character.life,
+                mana_power: character.mana_power,
+                shield: currentShield,
+            },
+            {
+                stage_id: stage.stage_id,
+                stage_background_src: stage.stage_background_src
+            },
+            {
+                name: enemy.name,
+                type: enemy.type,
+                life: enemy.life,
+                moves: enemy.moves,
+                imageSrc: enemy.imageSrc,
+                course_attack: enemy.course_attack,
+                id: enemy.id,
+            },
+        ]
+
         blockedAttackSound.play()
 
     } else if (currentShield < enemyAttack) {
@@ -520,14 +656,31 @@ function useShield(enemyAttack) {
         currentShield = 0
         console.log(` Shield = ${currentShield}, enemy attack = ${realEnemyAttackPower}`)
 
-        updatedCharacterObj = {
-            name: character.name,
-            imageSrc: character.imageSrc,
-            id: character.id,
-            life: character.life - realEnemyAttackPower,
-            mana_power: character.mana_power,
-            shield: currentShield,
-        }
+        updatedGameStatus = [
+            {
+                name: character.name,
+                imageSrc: character.imageSrc,
+                id: character.id,
+                life: character.life - realEnemyAttackPower,
+                mana_power: character.mana_power,
+                shield: currentShield,
+            },
+            {
+                stage_id: stage.stage_id,
+                stage_background_src: stage.stage_background_src
+            },
+            {
+                name: enemy.name,
+                type: enemy.type,
+                life: enemy.life,
+                moves: enemy.moves,
+                imageSrc: enemy.imageSrc,
+                course_attack: enemy.course_attack,
+                id: enemy.id,
+            },
+        ]
+
+        
         swordSound.play()
         toggleHideClass(hitIconPlayer)
         setTimeout(() => {
@@ -539,18 +692,34 @@ function useShield(enemyAttack) {
         currentShield = 0
         console.log(` Shield = ${currentShield}, enemy attack = ${realEnemyAttackPower}`)
 
-        updatedCharacterObj = {
-            name: character.name,
-            imageSrc: character.imageSrc,
-            id: character.id,
-            life: character.life - realEnemyAttackPower,
-            mana_power: character.mana_power,
-            shield: currentShield,
-        }
+        updatedGameStatus = [
+            {
+                name: character.name,
+                imageSrc: character.imageSrc,
+                id: character.id,
+                life: character.life,
+                mana_power: character.mana_power,
+                shield: currentShield,
+            },
+            {
+                stage_id: stage.stage_id,
+                stage_background_src: stage.stage_background_src
+            },
+            {
+                name: enemy.name,
+                type: enemy.type,
+                life: enemy.life,
+                moves: enemy.moves,
+                imageSrc: enemy.imageSrc,
+                course_attack: enemy.course_attack,
+                id: enemy.id,
+            },
+        ]
+
         blockedAttackSound.play()
     }
 
-    localStorage.setItem("selectedCharacter", JSON.stringify(updatedCharacterObj))
+    localStorage.setItem("currentGameStatus", JSON.stringify(updatedGameStatus))
     renderPlayerFromLocalStorage()
 }
 
@@ -560,11 +729,44 @@ function useShield(enemyAttack) {
 
 function startPlayerTurn() {
     if (isAlive) {
-
         console.log("Player turn started")
-        resetPlayerManaAndShield()
-        currentEnemy.course_attack = 0
         drawCardButton.disabled = false
+        endTurnButton.disabled = false
+        resetPlayerManaAndShield()
+        // currentgetEnemy.course_attack = 0 rewrite this
+
+        const character = getCurrentPlayer()
+        const stage = getCurrentStage()
+        const enemy = getCurrentEnemy()
+
+        let updatedGameStatus = [
+            {
+                name: character.name,
+                imageSrc: character.imageSrc,
+                id: character.id,
+                life: character.life,
+                mana_power: character.mana_power,
+                shield: character.shield,
+            },
+            {
+                stage_id: stage.stage_id,
+                stage_background_src: stage.stage_background_src
+            },
+            {
+                name: enemy.name,
+                type: enemy.type,
+                life: enemy.life,
+                moves: enemy.moves,
+                imageSrc: enemy.imageSrc,
+                course_attack: 0,
+                id: enemy.id,
+            },
+        ]
+
+        localStorage.setItem("currentGameStatus", JSON.stringify(updatedGameStatus))
+
+        
+
     }
 }
 
@@ -574,23 +776,39 @@ function startPlayerTurn() {
 
 function resetPlayerManaAndShield() {
 
-    let character = JSON.parse(localStorage.getItem("selectedCharacter"))
-    let updatedCharacterObj = {
-        name: character.name,
-        imageSrc: character.imageSrc,
-        id: character.id,
-        life: character.life,
-        mana_power: 3,
-        shield: 0,
-    }
+    let currentGameStatus = JSON.parse(localStorage.getItem("currentGameStatus"))
+        let character = currentGameStatus[0]
+        let stage = currentGameStatus[1]
+        let enemy = currentGameStatus[2]
 
-    playerShieldCount.innerText = Number(updatedCharacterObj.shield)
-    playerManaBar.innerText = Number(updatedCharacterObj.mana_power)
+    let updatedGameStatus = [
+        {
+                name: character.name,
+                imageSrc: character.imageSrc,
+                id: character.id,
+                life: character.life,
+                mana_power: 3,
+                shield: 0,
+        },
+        {
+                stage_id: stage.stage_id,
+                stage_background_src: stage.stage_background_src
+        },
+        {
+                name: enemy.name,
+                type: enemy.type,
+                life: enemy.life,
+                moves: enemy.moves,
+                imageSrc: enemy.imageSrc,
+                course_attack: enemy.course_attack,
+                id: enemy.id,
+        },
+    ]
+    
+    localStorage.setItem("currentGameStatus", JSON.stringify(updatedGameStatus))
 
-    shieldIconPlayer.classList.add("hide")
-    playerShieldCount.classList.add("hide")
+    renderCurrentGameStatus()
 
-    localStorage.setItem("selectedCharacter", JSON.stringify(updatedCharacterObj))
 }
 
 
@@ -613,7 +831,7 @@ cardDeckArray.map(card => {
 
 function renderPlayerFromLocalStorage() {
 
-    let player = getCurrentCharacter()
+    let player = getCurrentPlayer()
 
     playerLifeBar.innerText = player.life
     playerManaBar.innerText = player.mana_power
@@ -631,6 +849,7 @@ function renderPlayerFromLocalStorage() {
 
 }
 
+
 //Function to render player action in battleground central section
 
 function renderCharactersActionInBG(character, attack) {
@@ -644,9 +863,9 @@ function renderCharactersActionInBG(character, attack) {
 
 //Function to render enemy action in battleground central section
 
-function renderEnemyActionInBG(enemy) {
+function renderEnemyActionInBG(enemy, attack) {
     playerMovesContainer.innerHTML = `
-        <p>${enemy.name} used ${enemy.attack_name}</p>
+        <p>${enemy.name} used ${attack.name}</p>
     `
     setTimeout(()=> {
         playerMovesContainer.innerHTML = ""
@@ -655,10 +874,11 @@ function renderEnemyActionInBG(enemy) {
 
 //Function to check winner
 
+
 function checkWinner(character, enemy) {
 
-    const characterLife = Number(character.life)
-    const enemyLife = Number(enemyLifeBar.innerHTML)
+    const characterLife = character.life
+    const enemyLife = enemy.life
 
     if ( characterLife <= 0) {
         isAlive = false
@@ -667,11 +887,22 @@ function checkWinner(character, enemy) {
         endTurnButton.disabled = true
         playerLifeBar.innerText = 0
         clearDivHTML(cardsInHandContainer)
+
+        const button = document.createElement("button")
+        button.className = "command-button"
+        button.textContent = "Restart Game"
+        button.onclick = startNewGame
+
         setTimeout(()=>{
             playerMovesContainer.innerText = `You losed against ${enemy.name}!!`
             gameOverSound.play()
         }, 2000)
+        setTimeout(()=>{
+            clearDivHTML(playerMovesContainer)
+            playerMovesContainer.appendChild(button)
+        }, 6000)
 
+        localStorage.clear()
 
     } else if (enemyLife <= 0) {
         console.log(`${character.name} wins, you beated ${enemy.name}`)
@@ -679,17 +910,84 @@ function checkWinner(character, enemy) {
         endTurnButton.disabled = true
         enemyLifeBar.innerText = 0
         clearDivHTML(cardsInHandContainer)
+
+        const button = document.createElement("button")
+        button.className = "command-button"
+        button.textContent = "Next Stage"
+        button.onclick = startNextStage
+
         setTimeout(()=>{
             playerMovesContainer.innerText = `You beated ${enemy.name}!!`
             winningSound.play()
         }, 2000)
-
+        setTimeout(()=>{
+            clearDivHTML(playerMovesContainer)
+            playerMovesContainer.appendChild(button)
+        }, 6000)
+        
     }
 
     console.log(`Player life: ${characterLife}.....enemy life: ${enemyLife}`)
 }
 
-
 //Function to start new
+
+function startNewGame() {
+    console.log("Starting new game....")
+    localStorage.clear()
+    clearDivHTML(playerMovesContainer)
+    drawCardButton.disabled = false
+    endTurnButton.disabled = false
+    toggleHideClass(gameplayPageContainer)
+    toggleHideClass(characterSelectPage)
+}
+
+//Function to jump into next stage
+function startNextStage() {
+    handArray = []
+    console.log("Starting next stage...")
+    clearDivHTML(playerMovesContainer)
+    
+    let currentGameStatus = JSON.parse(localStorage.getItem("currentGameStatus"))
+
+        let character = currentGameStatus[0]
+        let stage = stagesArray[currentGameStatus[1].stage_id]
+        let stageId = currentGameStatus[1].stage_id + 1
+        let enemy = retriveEnemyByStageId(stageId, newEnemiesArray)
+
+
+    let updatedGameStatus = [
+        {
+                name: character.name,
+                imageSrc: character.imageSrc,
+                id: character.id,
+                life: character.life,
+                mana_power: 3,
+                shield: 0,
+        },
+        {
+                stage_id: stage.stage_id,
+                stage_background_src: stage.stage_background_src
+        },
+        {
+                name: enemy.name,
+                type: enemy.type,
+                life: enemy.life,
+                moves: enemy.moves,
+                imageSrc: enemy.imageSrc,
+                course_attack: enemy.course_attack,
+                id: enemy.id,
+        },
+
+    ]
+    
+    localStorage.setItem("currentGameStatus", JSON.stringify(updatedGameStatus))
+    drawCardButton.disabled = false
+    endTurnButton.disabled = false
+
+    renderCurrentStageBackground(stage)
+    renderEnemyInBattleground(enemy)
+    renderCurrentGameStatus()
+}
 
 

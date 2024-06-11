@@ -181,20 +181,73 @@ const cardDeckArray = [
 
 //Array containing all the enemies informations
 
-const enemiesArray = [
+
+const stagesArray = [
+    {
+        stage_id: 1,
+        stage_background_src: "/assets/pictures/backgrounds/forest1.png"
+    },
+    {
+        stage_id: 2,
+        stage_background_src: "/assets/pictures/backgrounds/forest2.png"
+    },
+    {
+        stage_id: 3,
+        stage_background_src: "/assets/pictures/backgrounds/forest3.png"
+    },
+    {
+        stage_id: 4,
+        stage_background_src: "/assets/pictures/backgrounds/forest4.png"
+    },
+]
+
+//New enemies array with updated data to test new functions
+
+const newEnemiesArray = [
     {
         name: "DragOn",
         type: "Dragon",
-        life: 30,
-        attack_power: 3,
-        attack_name: "bite",
-        special_move_name: "Huge Sword",
-        special_move_power: 9,
+        life: 1,
+        moves: [
+            {
+                name: "claw",
+                power: 3
+            },
+            {
+                name: "bite",
+                power: 6
+            },
+            {
+                name: "huge_sword",
+                power: 9
+            },
+        ],
         imageSrc: "/assets/pictures/characters/enemies/dragoPixel1.png",
         course_attack: 0,
         id: 1,
     },
+    {
+        name: "Robert",
+        type: "Robot",
+        life: 50,
+        moves: [
+            {
+                name: "claw",
+                power: 3
+            },
+            {
+                name: "bite",
+                power: 6
+            },
+            {
+                name: "huge_sword",
+                power: 9
+            },
+        ],
+        imageSrc: "/assets/pictures/characters/enemies/robotEnemy1.png",
+        course_attack: 0,
+        id: 2,
+    },
 ]
 
-
-export {charactersArray, cardDeckArray, enemiesArray}
+export {charactersArray, cardDeckArray, newEnemiesArray, stagesArray}
