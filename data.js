@@ -67,24 +67,24 @@ const cardDeckArray = [
         isUsed: false,
     },
     {
-        name: "sword",
-        imageSrc: "/assets/pictures/cards/sword_card.png",
+        name: "broadsword",
+        imageSrc: "/assets/pictures/cards/broadsword_card.png",
         type: "attack",
         icon: "",
-        power: 3,
+        power: 6,
         mana_cost: 1,
-        description: "Attack enemy with meele weapon, 3 points damage.",
+        description: "Attack enemy with meele weapon, 6 points damage.",
         id: createRandomId(),
         isUsed: false,
     },
     {
-        name: "sword",
-        imageSrc: "/assets/pictures/cards/sword_card.png",
+        name: "broadsword",
+        imageSrc: "/assets/pictures/cards/broadsword_card.png",
         type: "attack",
         icon: "",
-        power: 3,
+        power: 6,
         mana_cost: 1,
-        description: "Attack enemy with meele weapon, 3 points damage.",
+        description: "Attack enemy with meele weapon, 6 points damage.",
         id: createRandomId(),
         isUsed: false,
     },
@@ -111,24 +111,35 @@ const cardDeckArray = [
         isUsed: false,
     },
     {
-        name: "shield",
-        imageSrc: "/assets/pictures/cards/shield_card.png",
+        name: "big_shield",
+        imageSrc: "/assets/pictures/cards/bigShield_card.png",
         type: "defense",
         icon: "",
-        power: 3,
+        power: 6,
         mana_cost: 1,
-        description: "Reduce meele damage taken, 3 points shield.",
+        description: "Reduce meele damage taken, 6 points shield.",
         id: createRandomId(),
         isUsed: false,
     },
     {
-        name: "shield",
-        imageSrc: "/assets/pictures/cards/shield_card.png",
+        name: "big_shield",
+        imageSrc: "/assets/pictures/cards/bigShield_card.png",
         type: "defense",
         icon: "",
-        power: 3,
+        power: 6,
         mana_cost: 1,
-        description: "Reduce meele damage taken, 3 points shield.",
+        description: "Reduce meele damage taken, 6 points shield.",
+        id: createRandomId(),
+        isUsed: false,
+    },  
+    {
+        name: "skeleton",
+        imageSrc: "/assets/pictures/cards/course_card.png",
+        type: "course",
+        icon: "",
+        power: 1,
+        mana_cost: 1,
+        description: "Reduce enemy attack power by 1.",
         id: createRandomId(),
         isUsed: false,
     },
@@ -139,43 +150,34 @@ const cardDeckArray = [
         icon: "",
         power: 1,
         mana_cost: 1,
-        description: "Reduce enemy power attack by 1.",
+        description: "Reduce enemy attack power by 1.",
         id: createRandomId(),
         isUsed: false,
     },
     {
-        name: "skeleton",
-        imageSrc: "/assets/pictures/cards/course_card.png",
-        type: "course",
+        name: "life_potion",
+        imageSrc: "/assets/pictures/cards/lifePotion_card.png",
+        type: "potion",
         icon: "",
         power: 1,
-        mana_cost: 1,
-        description: "Reduce enemy power attack by 1.",
+        mana_cost: 2,
+        description: "Heals player for 10 health points.",
         id: createRandomId(),
         isUsed: false,
     },
     {
-        name: "skeleton",
-        imageSrc: "/assets/pictures/cards/course_card.png",
-        type: "course",
+        name: "life_potion",
+        imageSrc: "/assets/pictures/cards/lifePotion_card.png",
+        type: "potion",
         icon: "",
         power: 1,
-        mana_cost: 1,
-        description: "Reduce enemy power attack by 1.",
+        mana_cost: 2,
+        description: "Heals player for 10 health points.",
         id: createRandomId(),
         isUsed: false,
     },
-    {
-        name: "skeleton",
-        imageSrc: "/assets/pictures/cards/course_card.png",
-        type: "course",
-        icon: "",
-        power: 1,
-        mana_cost: 1,
-        description: "Reduce enemy power attack by 1.",
-        id: createRandomId(),
-        isUsed: false,
-    },
+    
+    
 
 ]
 
@@ -206,7 +208,6 @@ const stagesArray = [
 ]
 
 //New enemies array with updated data to test new functions
-
 const newEnemiesArray = [
     {
         name: "DragOn",
@@ -215,14 +216,14 @@ const newEnemiesArray = [
         moves: [
             {
                 name: "claw",
-                power: 1
+                power: 2
+            },
+            {
+                name: "tail",
+                power: 4
             },
             {
                 name: "bite",
-                power: 3
-            },
-            {
-                name: "huge_sword",
                 power: 6
             },
         ],
@@ -241,11 +242,11 @@ const newEnemiesArray = [
             },
             {
                 name: "AI",
-                power: 4
+                power: 5
             },
             {
                 name: "laser",
-                power: 6
+                power: 7
             },
         ],
         imageSrc: "/assets/pictures/characters/enemies/robotEnemy1.png",
@@ -259,15 +260,15 @@ const newEnemiesArray = [
         moves: [
             {
                 name: "slime",
-                power: 4
-            },
-            {
-                name: "knife",
                 power: 5
             },
             {
+                name: "knife",
+                power: 7
+            },
+            {
                 name: "bad_smell",
-                power: 6
+                power: 9
             },
         ],
         imageSrc: "/assets/pictures/characters/enemies/redGoblin1.png",
@@ -281,15 +282,15 @@ const newEnemiesArray = [
         moves: [
             {
                 name: "ninjitzu",
-                power: 6
-            },
-            {
-                name: "shuriken",
                 power: 7
             },
             {
+                name: "shuriken",
+                power: 9
+            },
+            {
                 name: "silent kill",
-                power: 8
+                power: 11
             },
         ],
         imageSrc: "/assets/pictures/characters/enemies/blackKnight1.png",
@@ -303,15 +304,15 @@ const newEnemiesArray = [
         moves: [
             {
                 name: "sword",
-                power: 7
+                power: 9
             },
             {
                 name: "mace",
-                power: 8
+                power: 11
             },
             {
                 name: "final touch",
-                power: 10
+                power: 13
             },
         ],
         imageSrc: "/assets/pictures/characters/enemies/goldKnight1.png",

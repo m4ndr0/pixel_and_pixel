@@ -237,10 +237,6 @@ function getRandomCardFromDeck() {
 let handArray = []
 
 
-function returnFilterdArray(array) {
- // to implement maybe ?????
-}
-
 
 function getHand() {
     if (isAlive) {
@@ -311,12 +307,30 @@ function getRemainingMana() {
     return remainingMana
 }
 
+//Function to render current Game status
+
+function renderCurrentGameStatus() {
+    const currentGameStatus = JSON.parse(localStorage.getItem("currentGameStatus"))
+    const player = currentGameStatus[0]
+    const stage = currentGameStatus[1]
+    const enemy = currentGameStatus[2]
+    playerLifeBar.innerText = player.life
+    playerManaBar.innerText = player.mana_power
+    enemyLifeBar.innerText = enemy.life
+    if (player.shield > 0) {
+        shieldIconPlayer.classList.remove("hide")
+        playerShieldCount.innerText = player.shield
+        playerShieldCount.classList.remove("hide")
+    } else {
+        shieldIconPlayer.classList.add("hide")
+        playerShieldCount.classList.add("hide")
+    }
+}
+
 //Cards Actions Functions
 
 
-
-
-function attackCard() {
+function swordCard() {
     const remainingMana = getRemainingMana()
     if (remainingMana > 0) {
         swordSound.play()
@@ -355,14 +369,7 @@ function attackCard() {
                 id: enemy.id,
             },
         ]
-        // let updatedCharacterObj = {
-        //     name: character.name,
-        //     imageSrc: character.imageSrc,
-        //     id: character.id,
-        //     life: character.life,
-        //     mana_power: remainingMana - 1,
-        //     shield: character.shield,
-        // }
+        
 
         localStorage.setItem("currentGameStatus", JSON.stringify(updatedGameStatus))
 
@@ -373,25 +380,7 @@ function attackCard() {
     }
 }
 
-//Function to render current Game status
 
-function renderCurrentGameStatus() {
-    const currentGameStatus = JSON.parse(localStorage.getItem("currentGameStatus"))
-    const player = currentGameStatus[0]
-    const stage = currentGameStatus[1]
-    const enemy = currentGameStatus[2]
-    playerLifeBar.innerText = player.life
-    playerManaBar.innerText = player.mana_power
-    enemyLifeBar.innerText = enemy.life
-    if (player.shield > 0) {
-        shieldIconPlayer.classList.remove("hide")
-        playerShieldCount.innerText = player.shield
-        playerShieldCount.classList.remove("hide")
-    } else {
-        shieldIconPlayer.classList.add("hide")
-        playerShieldCount.classList.add("hide")
-    }
-}
 
 function shieldCard() {
 
@@ -479,26 +468,174 @@ function skeletonCard() {
     }
 }
 
+function broadswordCard() {
+    const remainingMana = getRemainingMana()
+    if (remainingMana > 0) {
+        swordSound.play()
+        toggleHideClass(hitIconEnemy)
+        setTimeout(() => {
+            toggleHideClass(hitIconEnemy)
+        }, 300);
+
+        const attackPower = 6
+
+        let currentGameStatus = JSON.parse(localStorage.getItem("currentGameStatus"))
+        let character = currentGameStatus[0]
+        let stage = currentGameStatus[1]
+        let enemy = currentGameStatus[2]
+
+        let updatedGameStatus = [
+            {
+                name: character.name,
+                imageSrc: character.imageSrc,
+                id: character.id,
+                life: character.life,
+                mana_power: remainingMana - 1,
+                shield: character.shield,
+            },
+            {
+                stage_id: stage.stage_id,
+                stage_background_src: stage.stage_background_src
+            },
+            {
+                name: enemy.name,
+                type: enemy.type,
+                life: enemy.life - attackPower,
+                moves: enemy.moves,
+                imageSrc: enemy.imageSrc,
+                course_attack: enemy.course_attack,
+                id: enemy.id,
+            },
+        ]
+        
+
+        localStorage.setItem("currentGameStatus", JSON.stringify(updatedGameStatus))
+
+
+        renderCurrentGameStatus()
+    } 
+}
+
+function bigShieldCard() {
+
+    const remainingMana = getRemainingMana()
+    if (remainingMana > 0) {
+        equipArmorSound.play()
+        let currentGameStatus = JSON.parse(localStorage.getItem("currentGameStatus"))
+        let character = currentGameStatus[0]
+        let stage = currentGameStatus[1]
+        let enemy = currentGameStatus[2]
+
+        let updatedGameStatus = [
+            {
+                name: character.name,
+                imageSrc: character.imageSrc,
+                id: character.id,
+                life: character.life,
+                mana_power: remainingMana - 1,
+                shield: character.shield + 6,
+            },
+            {
+                stage_id: stage.stage_id,
+                stage_background_src: stage.stage_background_src
+            },
+            {
+                name: enemy.name,
+                type: enemy.type,
+                life: enemy.life,
+                moves: enemy.moves,
+                imageSrc: enemy.imageSrc,
+                course_attack: enemy.course_attack,
+                id: enemy.id,
+            },
+        ]
+
+        localStorage.setItem("currentGameStatus", JSON.stringify(updatedGameStatus))
+
+
+        renderCurrentGameStatus()
+
+    }
+}
+
+function lifePotionCard() {
+
+    const remainingMana = getRemainingMana()
+    if (remainingMana >= 2) {
+        courseSound.play()
+        let currentGameStatus = JSON.parse(localStorage.getItem("currentGameStatus"))
+        let character = currentGameStatus[0]
+        let stage = currentGameStatus[1]
+        let enemy = currentGameStatus[2]
+
+        let characterLifeCured = character.life + 10
+
+        if (characterLifeCured > 30) {
+            characterLifeCured = 30
+        }
+
+        let updatedGameStatus = [
+            {
+                name: character.name,
+                imageSrc: character.imageSrc,
+                id: character.id,
+                life: characterLifeCured,
+                mana_power: remainingMana - 2,
+                shield: character.shield,
+            },
+            {
+                stage_id: stage.stage_id,
+                stage_background_src: stage.stage_background_src
+            },
+            {
+                name: enemy.name,
+                type: enemy.type,
+                life: enemy.life,
+                moves: enemy.moves,
+                imageSrc: enemy.imageSrc,
+                course_attack: enemy.course_attack,
+                id: enemy.id,
+            },
+        ]
+
+        localStorage.setItem("currentGameStatus", JSON.stringify(updatedGameStatus))
+
+
+        renderCurrentGameStatus()
+
+    }
+}
 
 // var audio = new Audio('audio_file.mp3');
 // audio.play();
 
-
 // Function to use selected card
 cardsInHandContainer.addEventListener("click", function(e) {
     if (isAlive) {
-        if (getRemainingMana() != 0) {
+        let cardId = e.target.id
+        const card = getCardById(cardId, cardDeckArray)
+        if (getRemainingMana() < card.mana_cost) {
+            console.log("Not enough mana")
+            playerMovesContainer.innerText = "Not enough mana."
+            setTimeout(()=> {
+                clearDivHTML(playerMovesContainer)
+            }, 1500)
+        }
+        if (getRemainingMana() >= card.mana_cost) {
             if (e.target.id != "cards-in-hand-container" && e.target.classList != "card-in-hand") {
-                let cardId = e.target.id
-                const card = getCardById(cardId, cardDeckArray)
                 card.isUsed = true
                 if (card.name === "shield") {
                     shieldCard()
                 } else if (card.name === "sword") {
-                    attackCard()
+                    swordCard()
                 } else if (card.name === "skeleton") {
                     skeletonCard()
-                    console.log(`Coursed! Enemy's attack reduced by ${getCurrentEnemy().course_attack}`)
+                } else if (card.name === "broadsword") {
+                    broadswordCard()
+                } else if (card.name === "big_shield") {
+                    bigShieldCard()
+                } else if (card.name === "life_potion") {
+                    lifePotionCard()
                 }
                 toggleHideClass(e.target)
                 
