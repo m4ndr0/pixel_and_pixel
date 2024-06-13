@@ -22,11 +22,14 @@ const enterGameButton = document.getElementById("enter-game-button")
 const drawCardButton = document.getElementById("draw-card-button")
 const endTurnButton = document.getElementById("end-turn-button")
 
+const restartEndGameButton = document.getElementById("restart-end-game-button")
 /////////////////////////////////////7
 
 const introPageContainer = document.getElementById("intro-page-container")
 const characterSelectPage = document.getElementById("character-select-page")
 const gameplayPageContainer = document.getElementById("gameplay-page-container")
+const gameSceneContainer = document.getElementById("game-scene-container")
+
 
 const playableCharactersContainer = document.getElementById("playable-characters-container")
 
@@ -53,6 +56,8 @@ const deckWindowContainer = document.getElementById("deck-window-container")
 const deckWindow = document.getElementById("deck-window")
 const closeDeckWindowButton = document.getElementById("close-deck-window-button")
 
+const endPageContainer = document.getElementById("end-page-container")
+
 /* === Gameplay interactions icons Constants === */
 
 const shieldIconPlayer = document.getElementById("shield-icon-player")
@@ -74,7 +79,11 @@ const drawCardSound = new Audio("/assets/audio_effects/draw_card_sound.MP3")
 const selectSound = new Audio("/assets/audio_effects/select_sound.MP3")
 const gameOverSound = new Audio("/assets/audio_effects/game_over_sound.MP3")
 const winningSound = new Audio("/assets/audio_effects/winning_sound.MP3")
+/* === MP4_video Constants */
 
+
+const introVideo = document.getElementById("intro-video")
+const endVideo = document.getElementById("end-video")
 
 /* === Event Listeners === */
 
@@ -88,15 +97,16 @@ playableCharactersContainer.addEventListener("click", selectPlayer)
 
 drawCardButton.addEventListener("click", getHand)
 
-
+restartEndGameButton.addEventListener("click", startNewGameAfterEnd)
 
 /////////////////////* === Functions === */ /////////////////////////
 
-
+introVideo.play()
 
 /* === UI Functions === */
 
 function enterGame() {
+    introVideo.pause()
     toggleHideClass(characterSelectPage)
     toggleHideClass(introPageContainer)
     selectSound.play()
@@ -119,10 +129,7 @@ for (let character of charactersArray) {
     `
 }
 
-
 /* === Functions to select player character and render the selected character on the battleground === */
-
-
 
 function selectPlayer(e) {
     if (e.target.id && e.target.id != "playable-characters-container") {
@@ -1053,22 +1060,20 @@ function checkWinner(character, enemy) {
 
         if (stage.stage_id === 5) {
             // ///////////////////// CHANGE THE CODE HERE TO ADD THE END VIDEO   ////////////////////////////////////////////
-            const button = document.createElement("button")
-            button.className = "command-button"
-            button.textContent = "Restart"
-            button.onclick = startNewGame
-            
             handArray = []
             localStorage.clear()
-
             setTimeout(()=>{
                 playerMovesContainer.innerText = `You beated ${enemy.name}!!`
                 winningSound.play()
             }, 2000)
+
             setTimeout(()=>{
-                clearDivHTML(playerMovesContainer)
-                playerMovesContainer.appendChild(button)
-            }, 6000)
+
+                toggleHideClass(gameSceneContainer)
+                toggleHideClass(endPageContainer)
+                document.getElementById("end-video").play()
+            }, 7000)
+
         } else {
             const button = document.createElement("button")
             button.className = "command-button"
@@ -1149,4 +1154,17 @@ function startNextStage() {
     renderCurrentGameStatus()
 }
 
+//Function to restart game at the end of the game
+
+function startNewGameAfterEnd() {
+        console.log("Starting new game....")
+        clearDivHTML(playerMovesContainer)
+        endVideo.pause()
+        toggleHideClass(endPageContainer)
+        toggleHideClass(characterSelectPage)
+        toggleHideClass(gameplayPageContainer)
+        toggleHideClass(gameSceneContainer)
+        drawCardButton.disabled = false
+        endTurnButton.disabled = false
+}
 

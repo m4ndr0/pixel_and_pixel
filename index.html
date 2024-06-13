@@ -4,6 +4,7 @@
         <title>PixelAndPixel</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap" rel="stylesheet">
@@ -16,7 +17,7 @@
     <body>
 
         <div class="intro-page-container" id="intro-page-container">
-            <video class="intro-video" width="90%" height="100%" controls>
+            <video class="intro-video" id="intro-video" width="90%" height="100%" controls>
                 <source src="/assets/videos/intro.mp4" type="video/mp4">
             </video>
             <button class="enter-game-button" id="enter-game-button">ENTER GAME</button>
@@ -76,6 +77,13 @@
                     <button class="close-deck-window-button" id="close-deck-window-button">X</button>
                 </div>
                 <div class="deck-window" id="deck-window"></div>
+            </div>
+
+            <div class="end-page-container hide" id="end-page-container">
+                <video class="end-video" id="end-video" width="90%" height="100%" controls>
+                    <source src="/assets/videos/end_video.mp4" type="video/mp4">
+                    </video>
+                <button class="command-button restart-end-game-button" id="restart-end-game-button">Restart</button>
             </div>
         </div>
 
