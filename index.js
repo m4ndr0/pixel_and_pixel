@@ -101,7 +101,6 @@ restartEndGameButton.addEventListener("click", startNewGameAfterEnd)
 
 /////////////////////* === Functions === */ /////////////////////////
 
-introVideo.play()
 
 /* === UI Functions === */
 
